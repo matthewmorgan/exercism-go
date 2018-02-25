@@ -8,15 +8,13 @@ import (
 
 // Abbreviate takes a string s and return an acronym.
 func Abbreviate(s string) string {
-	acronym := ""
-	for _, token := range tokenize(s) {
-		acronym += strings.ToUpper(string(token[0]))
+	var acronym []byte
+	for _, token := range tokenize(strings.ToUpper(s)) {
+		acronym = append(acronym, token[0])
 	}
-	return acronym
+	return string(acronym)
 }
 
 func tokenize(phrase string) []string {
-	nocommas := regexp.MustCompile(`[,]`).ReplaceAllString(phrase, "")
-	nodashes := regexp.MustCompile(`[-]`).ReplaceAllString(nocommas, " ")
-	return strings.Split(nodashes, " ")
+	return regexp.MustCompile("[^A-Z]+").Split(phrase, -1)
 }
