@@ -1,4 +1,4 @@
-// Package acronym converts a phrase to an acronym
+// Package acronym converts a phrase to an acronym.
 package acronym
 
 import (
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// take a string s and return an acronym
+// Abbreviate takes a string s and return an acronym.
 func Abbreviate(s string) string {
 	acronym := ""
 	for _, token := range tokenize(s) {
