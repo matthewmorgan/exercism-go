@@ -7,43 +7,43 @@ import "regexp"
 
 // Hey accepts a remark as a string and return a response as a string
 func Hey(rawRemark string) string {
-  remark := removeWhitespace(rawRemark)
+	remark := removeWhitespace(rawRemark)
 
-  if isSilence(remark) {
-    return "Fine. Be that way!"
-  }
+	if isSilence(remark) {
+		return "Fine. Be that way!"
+	}
 
-  if isShouting(remark) && isQuestion(remark) {
-    return "Calm down, I know what I'm doing!"
-  }
+	if isShouting(remark) && isQuestion(remark) {
+		return "Calm down, I know what I'm doing!"
+	}
 
-  if isShouting(remark) {
-    return "Whoa, chill out!"
-  }
+	if isShouting(remark) {
+		return "Whoa, chill out!"
+	}
 
-  if isQuestion(remark) {
-    return "Sure."
-  }
+	if isQuestion(remark) {
+		return "Sure."
+	}
 
-  return "Whatever."
+	return "Whatever."
 }
 
 func isShouting(remark string) bool {
-  return containsLetters(remark) && strings.ToUpper(remark) == remark
+	return containsLetters(remark) && strings.ToUpper(remark) == remark
 }
 
 func isSilence(remark string) bool {
-  return len(remark) == 0
+	return len(remark) == 0
 }
 
 func isQuestion(remark string) bool {
-  return strings.HasSuffix(remark, "?")
+	return strings.HasSuffix(remark, "?")
 }
 
 func removeWhitespace(remark string) string {
-  return regexp.MustCompile(`\s`).ReplaceAllString(remark, "")
+	return regexp.MustCompile(`\s`).ReplaceAllString(remark, "")
 }
 
 func containsLetters(remark string) bool {
-  return regexp.MustCompile(`[a-zA-Z]+`).MatchString(remark)
+	return regexp.MustCompile(`[a-zA-Z]+`).MatchString(remark)
 }
