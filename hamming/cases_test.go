@@ -84,4 +84,14 @@ var testCases = []struct {
 		"AGTG",
 		-1,
 	},
+	{
+		"ÅTG",
+		"ATG",
+		-1,
+	},
+	{
+		"ÅTG",
+		"AGTG",
+		-1,
+	},
 }
