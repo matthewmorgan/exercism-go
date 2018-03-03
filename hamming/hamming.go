@@ -9,12 +9,12 @@ func Distance(a, b string) (int, error) {
 	if len(a) != len(b) {
 		return 0, errors.New("Strands cannot be different lengths!")
 	}
-	if !allValidChars(a) || ! allValidChars(b) {
+	if !allValidChars(a) || !allValidChars(b) {
 		return 0, errors.New("Strands cannot contain illegal characters!")
 	}
 	distance := 0
 	for idx := 0; idx < len(a); idx++ {
-		if a[idx] !=b[idx] {
+		if a[idx] != b[idx] {
 			distance += 1
 		}
 	}
