@@ -2,7 +2,7 @@
 package scrabble
 
 import (
-  "strings"
+	"strings"
 )
 
 var letterScores = map[rune]int{
@@ -28,12 +28,12 @@ var letterScores = map[rune]int{
 func Score(input string) int {
 	inputUpper := strings.ToUpper(input)
 	score := 0
-  for _, letter := range inputUpper {
-    if val, ok := letterScores[letter]; ok {
-      score += val
-    } else {
-      score += 1
-    }
-  }
+	for _, letter := range inputUpper {
+		if val, ok := letterScores[letter]; ok {
+			score += val
+		} else {
+			score += 1
+		}
+	}
 	return score
 }
