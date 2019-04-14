@@ -1,7 +1,9 @@
 // Package scrabble provides a method to score scrabble words
 package scrabble
 
-import "strings"
+import (
+	"strings"
+)
 
 var letterScores = map[rune]int{
 	'D': 2,
@@ -26,9 +28,8 @@ var letterScores = map[rune]int{
 func Score(input string) int {
 	inputUpper := strings.ToUpper(input)
 	score := 0
-	for _, s := range inputUpper {
-		val, ok := letterScores[s]
-		if  ok {
+	for _, letter := range inputUpper {
+		if val, ok := letterScores[letter]; ok {
 			score += val
 		} else {
 			score += 1
