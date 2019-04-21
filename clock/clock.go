@@ -8,7 +8,7 @@ type Clock struct {
 }
 
 const MINUTES_PER_DAY int = 1440
-const MINUTES_PER_HOUR int = 1440
+const MINUTES_PER_HOUR int = 60
 
 func New(hour, min int) Clock {
 	// normalize totalMinutes to discard whole days
