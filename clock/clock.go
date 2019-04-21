@@ -7,16 +7,17 @@ type Clock struct {
 	min int
 }
 
-const MINUTES_IN_DAY int = 1440
+const MINUTES_PER_DAY int = 1440
+const MINUTES_PER_HOUR int = 1440
 
 func New(hour, min int) Clock {
-	// normalize hoursAndMinutesInMinutes to discard whole days
-	hoursAndMinutesInMinutes := (hour * 60 + min) % MINUTES_IN_DAY
-	if hoursAndMinutesInMinutes < 0 {
-		hoursAndMinutesInMinutes += 1440
+	// normalize totalMinutes to discard whole days
+	totalMinutes := (hour * MINUTES_PER_HOUR + min) % MINUTES_PER_DAY
+	if totalMinutes < 0 {
+		totalMinutes += MINUTES_PER_DAY
 	}
-	h := (hoursAndMinutesInMinutes - hoursAndMinutesInMinutes % 60) / 60
-	m := hoursAndMinutesInMinutes - h * 60
+	h := (totalMinutes - totalMinutes % MINUTES_PER_HOUR) / MINUTES_PER_HOUR
+	m := totalMinutes - h * MINUTES_PER_HOUR
 	return Clock{h, m}
 }
 
