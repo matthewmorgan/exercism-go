@@ -28,12 +28,12 @@ var testCases = []struct {
 		listTwo:     []int{},
 		expected:    "superlist",
 	},
-	//{
-	//	description: "list equals itself",
-	//	listOne:     []int{1, 2, 3},
-	//	listTwo:     []int{1, 2, 3},
-	//	expected:    "equal",
-	//},
+	{
+		description: "list equals itself",
+		listOne:     []int{1, 2, 3},
+		listTwo:     []int{1, 2, 3},
+		expected:    "equal",
+	},
 	//{
 	//	description: "different lists",
 	//	listOne:     []int{1, 2, 3},
