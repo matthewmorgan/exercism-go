@@ -52,12 +52,12 @@ var testCases = []struct {
 		listTwo:     []int{0, 1, 1, 1, 2, 1, 2},
 		expected:    "sublist",
 	},
-	//{
-	//	description: "sublist at start",
-	//	listOne:     []int{0, 1, 2},
-	//	listTwo:     []int{0, 1, 2, 3, 4, 5},
-	//	expected:    "sublist",
-	//},
+	{
+		description: "sublist at start",
+		listOne:     []int{0, 1, 2},
+		listTwo:     []int{0, 1, 2, 3, 4, 5},
+		expected:    "sublist",
+	},
 	//{
 	//	description: "sublist in middle",
 	//	listOne:     []int{2, 3, 4},
