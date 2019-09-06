@@ -22,12 +22,12 @@ var testCases = []struct {
 		listTwo:     []int{1, 2, 3},
 		expected:    "sublist",
 	},
-	//{
-	//	description: "non empty list contains empty list",
-	//	listOne:     []int{1, 2, 3},
-	//	listTwo:     []int{},
-	//	expected:    "superlist",
-	//},
+	{
+		description: "non empty list contains empty list",
+		listOne:     []int{1, 2, 3},
+		listTwo:     []int{},
+		expected:    "superlist",
+	},
 	//{
 	//	description: "list equals itself",
 	//	listOne:     []int{1, 2, 3},
