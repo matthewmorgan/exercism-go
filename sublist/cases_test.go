@@ -40,12 +40,12 @@ var testCases = []struct {
 		listTwo:     []int{2, 3, 4},
 		expected:    "unequal",
 	},
-	//{
-	//	description: "false start",
-	//	listOne:     []int{1, 2, 5},
-	//	listTwo:     []int{0, 1, 2, 3, 1, 2, 5, 6},
-	//	expected:    "sublist",
-	//},
+	{
+		description: "false start",
+		listOne:     []int{1, 2, 5},
+		listTwo:     []int{0, 1, 2, 3, 1, 2, 5, 6},
+		expected:    "sublist",
+	},
 	//{
 	//	description: "consecutive",
 	//	listOne:     []int{1, 1, 2},
