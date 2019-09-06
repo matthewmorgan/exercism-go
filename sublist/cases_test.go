@@ -34,12 +34,12 @@ var testCases = []struct {
 		listTwo:     []int{1, 2, 3},
 		expected:    "equal",
 	},
-	//{
-	//	description: "different lists",
-	//	listOne:     []int{1, 2, 3},
-	//	listTwo:     []int{2, 3, 4},
-	//	expected:    "unequal",
-	//},
+	{
+		description: "different lists",
+		listOne:     []int{1, 2, 3},
+		listTwo:     []int{2, 3, 4},
+		expected:    "unequal",
+	},
 	//{
 	//	description: "false start",
 	//	listOne:     []int{1, 2, 5},

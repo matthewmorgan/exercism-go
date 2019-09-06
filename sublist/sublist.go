@@ -1,13 +1,18 @@
 package sublist
 
+import "reflect"
+
 type Relation string
 
 func Sublist(one []int, two []int) Relation {
-	if (len(two) > len(one)){
+	if len(two) > len(one) {
 		return "sublist"
 	}
-	if(len(one) > len(two)){
+	if len(one) > len(two) {
 		return "superlist"
 	}
-	return "equal"
+	if reflect.DeepEqual(one, two) {
+		return "equal"
+	}
+	return "unequal"
 }
