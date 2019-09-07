@@ -88,28 +88,28 @@ var testCases = []struct {
 		listTwo:     []int{3, 4, 5},
 		expected:    "superlist",
 	},
-	//{
-	//	description: "first list missing element from second list",
-	//	listOne:     []int{1, 3},
-	//	listTwo:     []int{1, 2, 3},
-	//	expected:    "unequal",
-	//},
-	//{
-	//	description: "second list missing element from first list",
-	//	listOne:     []int{1, 2, 3},
-	//	listTwo:     []int{1, 3},
-	//	expected:    "unequal",
-	//},
-	//{
-	//	description: "order matters to a list",
-	//	listOne:     []int{1, 2, 3},
-	//	listTwo:     []int{3, 2, 1},
-	//	expected:    "unequal",
-	//},
-	//{
-	//	description: "same digits but different numbers",
-	//	listOne:     []int{1, 0, 1},
-	//	listTwo:     []int{10, 1},
-	//	expected:    "unequal",
-	//},
+	{
+		description: "first list missing element from second list",
+		listOne:     []int{1, 3},
+		listTwo:     []int{1, 2, 3},
+		expected:    "unequal",
+	},
+	{
+		description: "second list missing element from first list",
+		listOne:     []int{1, 2, 3},
+		listTwo:     []int{1, 3},
+		expected:    "unequal",
+	},
+	{
+		description: "order matters to a list",
+		listOne:     []int{1, 2, 3},
+		listTwo:     []int{3, 2, 1},
+		expected:    "unequal",
+	},
+	{
+		description: "same digits but different numbers",
+		listOne:     []int{1, 0, 1},
+		listTwo:     []int{10, 1},
+		expected:    "unequal",
+	},
 }
