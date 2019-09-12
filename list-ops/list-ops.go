@@ -20,3 +20,13 @@ func (list IntList) Foldr(op binFunc, initial int) int {
 	}
 	return acc
 }
+
+func (list IntList) Filter(op predFunc) IntList {
+	results := IntList{}
+	for _, el := range list {
+		if op(el){
+			results = append(results, el)
+		}
+	}
+	return results
+}

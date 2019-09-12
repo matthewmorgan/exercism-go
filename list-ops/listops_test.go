@@ -1,7 +1,10 @@
 package listops
 
-//import "reflect"
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
+
 
 var foldTestCases = []struct {
 	name     string
@@ -102,18 +105,18 @@ var filterTestCases = []struct {
 	},
 }
 
-//func TestFilterMethod(t *testing.T) {
-//	for _, tt := range filterTestCases {
-//		in := IntList(tt.list)
-//		got := in.Filter(tt.fn)
-//		if !reflect.DeepEqual(IntList(tt.want), got) {
-//			t.Fatalf("FAIL: %s: %q -- expected: %v, actual: %v", tt.property, tt.name, tt.want, got)
-//		} else {
-//			t.Logf("PASS: %s: %s", tt.property, tt.name)
-//		}
-//
-//	}
-//}
+func TestFilterMethod(t *testing.T) {
+	for _, tt := range filterTestCases {
+		in := IntList(tt.list)
+		got := in.Filter(tt.fn)
+		if !reflect.DeepEqual(IntList(tt.want), got) {
+			t.Fatalf("FAIL: %s: %q -- expected: %v, actual: %v", tt.property, tt.name, tt.want, got)
+		} else {
+			t.Logf("PASS: %s: %s", tt.property, tt.name)
+		}
+
+	}
+}
 //
 //var lengthTestCases = []struct {
 //	name     string
