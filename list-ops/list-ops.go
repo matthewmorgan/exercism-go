@@ -30,3 +30,7 @@ func (list IntList) Filter(op predFunc) IntList {
 	}
 	return results
 }
+
+func (list IntList) Length() int {
+	return len(list)
+}
