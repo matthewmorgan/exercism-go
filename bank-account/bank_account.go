@@ -1,15 +1,18 @@
 package account
 
+import "sync"
+
 type Account struct {
 	balance int64
 	closed  bool
+	mux sync.Mutex
 }
 
 func Open(initialDeposit int64) *Account {
 	if initialDeposit < 0 {
 		return nil
 	}
-	a := Account{initialDeposit, false}
+	a := Account{balance: initialDeposit, closed: false}
 	return &a
 }
 
@@ -21,6 +24,9 @@ func (a *Account) Balance() (int64, bool) {
 }
 
 func (a *Account) Close() (int64, bool) {
+	a.mux.Lock()
+	// I used this pattern because there are multiple returns from these methods.
+	defer a.mux.Unlock()
 	if a.closed {
 		return 0, false
 	}
@@ -29,6 +35,8 @@ func (a *Account) Close() (int64, bool) {
 }
 
 func (a *Account) Deposit(amount int64) (int64, bool) {
+	a.mux.Lock()
+	defer a.mux.Unlock()
 	if a.closed {
 		return 0, false
 	}

@@ -27,7 +27,11 @@
 package account
 
 import (
+	"runtime"
+	"sync"
+	"sync/atomic"
 	"testing"
+	"time"
 )
 
 func TestSeqOpenBalanceClose(t *testing.T) {
@@ -187,122 +191,122 @@ func TestMoreSeqCases(t *testing.T) {
 	}
 }
 
-//func TestConcClose(t *testing.T) {
-//	if runtime.NumCPU() < 2 {
-//		t.Skip("Multiple CPU cores required for concurrency tests.")
-//	}
-//	if runtime.GOMAXPROCS(0) < 2 {
-//		runtime.GOMAXPROCS(2)
-//	}
-//
-//	// test competing close attempts
-//	for rep := 0; rep < 1000; rep++ {
-//		const openAmt = 10
-//		a := Open(openAmt)
-//		if a == nil {
-//			t.Fatalf("Open(%d) = nil, want non-nil *Account.", openAmt)
-//		}
-//		var start sync.WaitGroup
-//		start.Add(1)
-//		const closeAttempts = 10
-//		res := make(chan string)
-//		for i := 0; i < closeAttempts; i++ {
-//			go func() { // on your mark,
-//				start.Wait() // get set...
-//				switch p, ok := a.Close(); {
-//				case !ok:
-//					if p != 0 {
-//						t.Errorf("a.Close() = %d, %t.  "+
-//							"Want payout = 0 for unsuccessful close", p, ok)
-//						res <- "fail"
-//					} else {
-//						res <- "already closed"
-//					}
-//				case p != openAmt:
-//					t.Errorf("a.Close() = %d, %t.  "+
-//						"Want payout = %d for successful close", p, ok, openAmt)
-//					res <- "fail"
-//				default:
-//					res <- "close" // exactly one goroutine should reach here
-//				}
-//			}()
-//		}
-//		start.Done() // ...go
-//		var closes, fails int
-//		for i := 0; i < closeAttempts; i++ {
-//			switch <-res {
-//			case "close":
-//				closes++
-//			case "fail":
-//				fails++
-//			}
-//		}
-//		switch {
-//		case fails > 0:
-//			t.FailNow() // error already logged by other goroutine
-//		case closes == 0:
-//			t.Fatal("Concurrent a.Close() attempts all failed.  " +
-//				"Want one to succeed.")
-//		case closes > 1:
-//			t.Fatalf("%d concurrent a.Close() attempts succeeded, "+
-//				"each paying out %d!.  Want just one to succeed.",
-//				closes, openAmt)
-//		}
-//	}
-//}
-//
-//func TestConcDeposit(t *testing.T) {
-//	if runtime.NumCPU() < 2 {
-//		t.Skip("Multiple CPU cores required for concurrency tests.")
-//	}
-//	if runtime.GOMAXPROCS(0) < 2 {
-//		runtime.GOMAXPROCS(2)
-//	}
-//	a := Open(0)
-//	if a == nil {
-//		t.Fatal("Open(0) = nil, want non-nil *Account.")
-//	}
-//	const amt = 10
-//	const c = 1000
-//	var negBal int32
-//	var start, g sync.WaitGroup
-//	start.Add(1)
-//	g.Add(3 * c)
-//	for i := 0; i < c; i++ {
-//		go func() { // deposit
-//			start.Wait()
-//			a.Deposit(amt) // ignore return values
-//			g.Done()
-//		}()
-//		go func() { // withdraw
-//			start.Wait()
-//			for {
-//				if _, ok := a.Deposit(-amt); ok {
-//					break
-//				}
-//				time.Sleep(time.Microsecond) // retry
-//			}
-//			g.Done()
-//		}()
-//		go func() { // watch that balance stays >= 0
-//			start.Wait()
-//			if p, _ := a.Balance(); p < 0 {
-//				atomic.StoreInt32(&negBal, 1)
-//			}
-//			g.Done()
-//		}()
-//	}
-//	start.Done()
-//	g.Wait()
-//	if negBal == 1 {
-//		t.Fatal("Balance went negative with concurrent deposits and " +
-//			"withdrawals.  Want balance always >= 0.")
-//	}
-//	if p, ok := a.Balance(); !ok || p != 0 {
-//		t.Fatalf("After equal concurrent deposits and withdrawals, "+
-//			"a.Balance = %d, %t.  Want 0, true", p, ok)
-//	}
-//}
+func TestConcClose(t *testing.T) {
+	if runtime.NumCPU() < 2 {
+		t.Skip("Multiple CPU cores required for concurrency tests.")
+	}
+	if runtime.GOMAXPROCS(0) < 2 {
+		runtime.GOMAXPROCS(2)
+	}
+
+	// test competing close attempts
+	for rep := 0; rep < 1000; rep++ {
+		const openAmt = 10
+		a := Open(openAmt)
+		if a == nil {
+			t.Fatalf("Open(%d) = nil, want non-nil *Account.", openAmt)
+		}
+		var start sync.WaitGroup
+		start.Add(1)
+		const closeAttempts = 10
+		res := make(chan string)
+		for i := 0; i < closeAttempts; i++ {
+			go func() { // on your mark,
+				start.Wait() // get set...
+				switch p, ok := a.Close(); {
+				case !ok:
+					if p != 0 {
+						t.Errorf("a.Close() = %d, %t.  "+
+							"Want payout = 0 for unsuccessful close", p, ok)
+						res <- "fail"
+					} else {
+						res <- "already closed"
+					}
+				case p != openAmt:
+					t.Errorf("a.Close() = %d, %t.  "+
+						"Want payout = %d for successful close", p, ok, openAmt)
+					res <- "fail"
+				default:
+					res <- "close" // exactly one goroutine should reach here
+				}
+			}()
+		}
+		start.Done() // ...go
+		var closes, fails int
+		for i := 0; i < closeAttempts; i++ {
+			switch <-res {
+			case "close":
+				closes++
+			case "fail":
+				fails++
+			}
+		}
+		switch {
+		case fails > 0:
+			t.FailNow() // error already logged by other goroutine
+		case closes == 0:
+			t.Fatal("Concurrent a.Close() attempts all failed.  " +
+				"Want one to succeed.")
+		case closes > 1:
+			t.Fatalf("%d concurrent a.Close() attempts succeeded, "+
+				"each paying out %d!.  Want just one to succeed.",
+				closes, openAmt)
+		}
+	}
+}
+
+func TestConcDeposit(t *testing.T) {
+	if runtime.NumCPU() < 2 {
+		t.Skip("Multiple CPU cores required for concurrency tests.")
+	}
+	if runtime.GOMAXPROCS(0) < 2 {
+		runtime.GOMAXPROCS(2)
+	}
+	a := Open(0)
+	if a == nil {
+		t.Fatal("Open(0) = nil, want non-nil *Account.")
+	}
+	const amt = 10
+	const c = 1000
+	var negBal int32
+	var start, g sync.WaitGroup
+	start.Add(1)
+	g.Add(3 * c)
+	for i := 0; i < c; i++ {
+		go func() { // deposit
+			start.Wait()
+			a.Deposit(amt) // ignore return values
+			g.Done()
+		}()
+		go func() { // withdraw
+			start.Wait()
+			for {
+				if _, ok := a.Deposit(-amt); ok {
+					break
+				}
+				time.Sleep(time.Microsecond) // retry
+			}
+			g.Done()
+		}()
+		go func() { // watch that balance stays >= 0
+			start.Wait()
+			if p, _ := a.Balance(); p < 0 {
+				atomic.StoreInt32(&negBal, 1)
+			}
+			g.Done()
+		}()
+	}
+	start.Done()
+	g.Wait()
+	if negBal == 1 {
+		t.Fatal("Balance went negative with concurrent deposits and " +
+			"withdrawals.  Want balance always >= 0.")
+	}
+	if p, ok := a.Balance(); !ok || p != 0 {
+		t.Fatalf("After equal concurrent deposits and withdrawals, "+
+			"a.Balance = %d, %t.  Want 0, true", p, ok)
+	}
+}
 
 // The benchmark operations are here to encourage you to try different
 // implementations to see which ones perform better. These are worth
