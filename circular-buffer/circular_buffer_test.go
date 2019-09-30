@@ -187,21 +187,21 @@ func TestAlternateReadAndOverwrite(t *testing.T) {
 	tb.readFail()
 }
 
-//func BenchmarkOverwrite(b *testing.B) {
-//	c := NewBuffer(100)
-//	b.ResetTimer()
-//	for i := 0; i < b.N; i++ {
-//		c.Overwrite(0)
-//	}
-//	b.SetBytes(int64(b.N))
-//}
-//
-//func BenchmarkWriteRead(b *testing.B) {
-//	c := NewBuffer(100)
-//	b.ResetTimer()
-//	for i := 0; i < b.N; i++ {
-//		c.WriteByte(0)
-//		c.ReadByte()
-//	}
-//	b.SetBytes(int64(b.N))
-//}
+func BenchmarkOverwrite(b *testing.B) {
+	c := NewBuffer(100)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		c.Overwrite(0)
+	}
+	b.SetBytes(int64(b.N))
+}
+
+func BenchmarkWriteRead(b *testing.B) {
+	c := NewBuffer(100)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		c.WriteByte(0)
+		c.ReadByte()
+	}
+	b.SetBytes(int64(b.N))
+}

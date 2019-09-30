@@ -1,6 +1,8 @@
 package circular
 
-import "errors"
+import (
+	"errors"
+)
 
 type Buffer struct {
 	slots []byte
