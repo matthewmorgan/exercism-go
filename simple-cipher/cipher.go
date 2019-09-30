@@ -14,7 +14,13 @@ type Caesar struct {
 	offset byte
 }
 
-var INVALID_ARGS = []int{-27, -26, 0, 26, 27}
+type Vigenere struct {
+	key string
+	currentIndex int
+	shiftByIndex []int
+}
+
+var INVALID_SHIFT_ARGS = []int{-27, -26, 0, 26, 27}
 var re = regexp.MustCompile(`(?m)[a-z]+`)
 
 
@@ -25,12 +31,67 @@ func NewCaesar() Caesar {
 }
 
 func NewShift(offset int) *Caesar {
-	for _, invalidArg := range INVALID_ARGS {
+	for _, invalidArg := range INVALID_SHIFT_ARGS {
 		if offset == invalidArg {
 			return nil
 		}
 	}
 	return  &Caesar{offset:byte(offset)}
+}
+
+func NewVigenere(key string) *Vigenere {
+	var v Vigenere
+	// Must not be zero length.
+	if len(key) == 0 {
+		return nil
+	}
+	// Must not contain non-lowercase alpha characters.
+	if clean(key) != key {
+		return nil
+	}
+	var shiftByIndex = make([]int, len(key))
+	var checksum = 0
+	for idx, letter := range key {
+		var offset = int(letter - 'a')
+		shiftByIndex[idx] = offset
+		checksum += offset
+	}
+	// Zero checksum indicates a key that is all "a", which is not valid.
+	if checksum == 0 {
+		return nil
+	}
+	v.shiftByIndex = shiftByIndex
+	v.key = key
+	return &v
+}
+
+func (v Vigenere) Encode(plain string) string {
+	var cleaned = clean(plain)
+	var length = len(cleaned)
+	var result = make([]byte, length)
+	for idx, letter := range []byte(cleaned) {
+		result[idx] = xcode(letter, byte(v.shiftByIndex[v.currentIndex]))
+		v.incrementIndex()
+	}
+	return string(result)
+}
+
+func (v Vigenere) Decode(encoded string) string {
+	var length = len(encoded)
+	var result = make([]byte, length)
+	for idx, letter := range []byte(encoded) {
+		result[idx] = xcode(letter, -byte(v.shiftByIndex[v.currentIndex]))
+		v.incrementIndex()
+	}
+	return string(result)
+}
+
+func (v *Vigenere) incrementIndex() {
+	if v.currentIndex < len(v.key) - 1 {
+		v.currentIndex += 1
+	} else {
+		v.currentIndex = 0
+	}
 }
 
 func (c Caesar) Encode(plain string) string{

@@ -2,6 +2,7 @@ package cipher
 
 import (
 	"testing"
+	"fmt"
 )
 
 // type for testing cipher encoding alone, without requiring any text prep.
@@ -101,45 +102,45 @@ func TestShift(t *testing.T) {
 	}
 }
 
-//var vtests = []struct {
-//	key   string
-//	tests []cipherTest
-//}{
-//	{"lemon", []cipherTest{{"ATTACKATDAWN", "lxfopvefrnhr", "attackatdawn"}}},
-//	{"abcdefghij", []cipherTest{
-//		{"aaaaaaaaaa", "abcdefghij", "aaaaaaaaaa"},
-//		{"zzzzzzzzzz", "zabcdefghi", "zzzzzzzzzz"},
-//	}},
-//	{"iamapandabear", []cipherTest{
-//		{"I am a panda bear.", "qayaeaagaciai", "iamapandabear"},
-//	}},
-//	{"duxrceqyaimciuucnelkeoxjhdyduu", []cipherTest{
-//		{"Diffie Hellman", "gccwkixcltycv", "diffiehellman"},
-//	}},
-//	{"qgbvno", []cipherTest{
-//		{"cof-FEE, 123!", "sugars", "coffee"},
-//	}},
-//}
-//
-//func TestVigenere(t *testing.T) {
-//	for _, test := range vtests {
-//		v := NewVigenere(test.key)
-//		if v == nil {
-//			t.Fatalf("NewVigenere(%q) returned nil, want non-nil Cipher",
-//				test.key)
-//		}
-//		testCipher(fmt.Sprintf("Vigenere(%q)", test.key), v, test.tests, t)
-//	}
-//
-//	// invalid keys
-//	for _, k := range []string{"", "a", "aa", "no way", "CAT", "3", "and,"} {
-//		if NewVigenere(k) != nil {
-//			t.Fatalf("NewVigenere(%q) returned non-nil, "+
-//				"Want nil return for invalid argument.", k)
-//		}
-//	}
-//}
-//
+var vtests = []struct {
+	key   string
+	tests []cipherTest
+}{
+	{"lemon", []cipherTest{{"ATTACKATDAWN", "lxfopvefrnhr", "attackatdawn"}}},
+	{"abcdefghij", []cipherTest{
+		{"aaaaaaaaaa", "abcdefghij", "aaaaaaaaaa"},
+		{"zzzzzzzzzz", "zabcdefghi", "zzzzzzzzzz"},
+	}},
+	{"iamapandabear", []cipherTest{
+		{"I am a panda bear.", "qayaeaagaciai", "iamapandabear"},
+	}},
+	{"duxrceqyaimciuucnelkeoxjhdyduu", []cipherTest{
+		{"Diffie Hellman", "gccwkixcltycv", "diffiehellman"},
+	}},
+	{"qgbvno", []cipherTest{
+		{"cof-FEE, 123!", "sugars", "coffee"},
+	}},
+}
+
+func TestVigenere(t *testing.T) {
+	for _, test := range vtests {
+		v := NewVigenere(test.key)
+		if v == nil {
+			t.Fatalf("NewVigenere(%q) returned nil, want non-nil Cipher",
+				test.key)
+		}
+		testCipher(fmt.Sprintf("Vigenere(%q)", test.key), v, test.tests, t)
+	}
+
+	// invalid keys
+	for _, k := range []string{"", "a", "aa", "no way", "CAT", "3", "and,"} {
+		if NewVigenere(k) != nil {
+			t.Fatalf("NewVigenere(%q) returned non-nil, "+
+				"Want nil return for invalid argument.", k)
+		}
+	}
+}
+
 //// Benchmark combined time to run all tests.
 //// Note other ciphers test different data; times cannot be compared.
 //func BenchmarkEncodeCaesar(b *testing.B) {
