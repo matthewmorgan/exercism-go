@@ -97,16 +97,16 @@ func TestWriteAndReadOneItem(t *testing.T) {
 	tb.read('1')
 	tb.readFail()
 }
-//
-//func TestWriteAndReadMultipleItems(t *testing.T) {
-//	tb := nb(2, t)
-//	tb.write('1')
-//	tb.write('2')
-//	tb.read('1')
-//	tb.read('2')
-//	tb.readFail()
-//}
-//
+
+func TestWriteAndReadMultipleItems(t *testing.T) {
+	tb := nb(2, t)
+	tb.write('1')
+	tb.write('2')
+	tb.read('1')
+	tb.read('2')
+	tb.readFail()
+}
+
 //func TestReset(t *testing.T) {
 //	tb := nb(3, t)
 //	tb.write('1')
