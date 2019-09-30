@@ -26,44 +26,44 @@ func TestCaesarPrepped(t *testing.T) {
 		}
 	}
 }
-//
-//// type for testing implementations of the Cipher interface
-//type cipherTest struct {
-//	source string // source text, any UTF-8
-//	cipher string // cipher text, result of Encode(st)
-//	plain  string // decoded plain text, result of Decode(ct)
-//}
-//
-//var caesarTests = []cipherTest{
-//	{"Go, go, gophers", "jrjrjrskhuv", "gogogophers"},
-//	{"I am a panda bear.", "ldpdsdqgdehdu", "iamapandabear"},
-//	{"Programming is AWESOME!", "surjudpplqjlvdzhvrph", "programmingisawesome"},
-//	{"today is holiday", "wrgdblvkrolgdb", "todayisholiday"},
-//	{"Twas the night before Christmas",
-//		"wzdvwkhqljkwehiruhfkulvwpdv",
-//		"twasthenightbeforechristmas"},
-//	{"venividivici", "yhqlylglylfl", "venividivici"},
-//	{" -- @#!", "", ""},
-//	{"", "", ""},
-//}
-//
-//func TestCaesar(t *testing.T) {
-//	testCipher("Caesar", NewCaesar(), caesarTests, t)
-//}
-//
-//func testCipher(name string, c Cipher, tests []cipherTest, t *testing.T) {
-//	for _, test := range tests {
-//		if enc := c.Encode(test.source); enc != test.cipher {
-//			t.Fatalf("%s Encode(%q) = %q, want %q.",
-//				name, test.plain, enc, test.cipher)
-//		}
-//		if dec := c.Decode(test.cipher); dec != test.plain {
-//			t.Fatalf("%s Decode(%q) = %q, want %q.",
-//				name, test.cipher, dec, test.plain)
-//		}
-//	}
-//}
-//
+
+// type for testing implementations of the Cipher interface
+type cipherTest struct {
+	source string // source text, any UTF-8
+	cipher string // cipher text, result of Encode(st)
+	plain  string // decoded plain text, result of Decode(ct)
+}
+
+var caesarTests = []cipherTest{
+	{"Go, go, gophers", "jrjrjrskhuv", "gogogophers"},
+	{"I am a panda bear.", "ldpdsdqgdehdu", "iamapandabear"},
+	{"Programming is AWESOME!", "surjudpplqjlvdzhvrph", "programmingisawesome"},
+	{"today is holiday", "wrgdblvkrolgdb", "todayisholiday"},
+	{"Twas the night before Christmas",
+		"wzdvwkhqljkwehiruhfkulvwpdv",
+		"twasthenightbeforechristmas"},
+	{"venividivici", "yhqlylglylfl", "venividivici"},
+	{" -- @#!", "", ""},
+	{"", "", ""},
+}
+
+func TestCaesar(t *testing.T) {
+	testCipher("Caesar", NewCaesar(), caesarTests, t)
+}
+
+func testCipher(name string, c Cipher, tests []cipherTest, t *testing.T) {
+	for _, test := range tests {
+		if enc := c.Encode(test.source); enc != test.cipher {
+			t.Fatalf("%s Encode(%q) = %q, want %q.",
+				name, test.plain, enc, test.cipher)
+		}
+		if dec := c.Decode(test.cipher); dec != test.plain {
+			t.Fatalf("%s Decode(%q) = %q, want %q.",
+				name, test.cipher, dec, test.plain)
+		}
+	}
+}
+
 //var NSATests = []cipherTest{
 //	{"THE ENEMY IS NEAR", "qebbkbjvfpkbxo", "theenemyisnear"},
 //	{"SPIES SEND SECRET MESSAGES",
