@@ -164,29 +164,29 @@ func TestOverwriteNonFull(t *testing.T) {
 	tb.readFail()
 }
 
-//func TestAlternateReadAndOverwrite(t *testing.T) {
-//	tb := nb(5, t)
-//	tb.write('1')
-//	tb.write('2')
-//	tb.write('3')
-//	tb.read('1')
-//	tb.read('2')
-//	tb.write('4')
-//	tb.read('3')
-//	tb.write('5')
-//	tb.write('6')
-//	tb.write('7')
-//	tb.write('8')
-//	tb.overwrite('A')
-//	tb.overwrite('B')
-//	tb.read('6')
-//	tb.read('7')
-//	tb.read('8')
-//	tb.read('A')
-//	tb.read('B')
-//	tb.readFail()
-//}
-//
+func TestAlternateReadAndOverwrite(t *testing.T) {
+	tb := nb(5, t)
+	tb.write('1')
+	tb.write('2')
+	tb.write('3')
+	tb.read('1')
+	tb.read('2')
+	tb.write('4')
+	tb.read('3')
+	tb.write('5')
+	tb.write('6')
+	tb.write('7')
+	tb.write('8')
+	tb.overwrite('A')
+	tb.overwrite('B')
+	tb.read('6')
+	tb.read('7')
+	tb.read('8')
+	tb.read('A')
+	tb.read('B')
+	tb.readFail()
+}
+
 //func BenchmarkOverwrite(b *testing.B) {
 //	c := NewBuffer(100)
 //	b.ResetTimer()
