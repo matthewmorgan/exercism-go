@@ -22,6 +22,9 @@ func (b *Buffer) ReadByte() (byte, error) {
 }
 
 func (b *Buffer) WriteByte(c byte) error {
+	if len(b.slots) == b.maxSize {
+		return errors.New("buffer is full")
+	}
 	b.slots = append(b.slots, c)
 	return nil
 }

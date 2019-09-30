@@ -137,14 +137,14 @@ func TestReadOldestItem(t *testing.T) {
 	tb.read('2')
 	tb.read('3')
 }
-//
-//func TestWriteFullBuffer(t *testing.T) {
-//	tb := nb(2, t)
-//	tb.write('1')
-//	tb.write('2')
-//	tb.writeFail('A')
-//}
-//
+
+func TestWriteFullBuffer(t *testing.T) {
+	tb := nb(2, t)
+	tb.write('1')
+	tb.write('2')
+	tb.writeFail('A')
+}
+
 //func TestOverwriteFull(t *testing.T) {
 //	tb := nb(2, t)
 //	tb.write('1')
