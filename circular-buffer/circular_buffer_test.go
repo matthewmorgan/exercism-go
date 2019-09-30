@@ -120,14 +120,14 @@ func TestReset(t *testing.T) {
 	tb.read('3')
 }
 
-//func TestAlternateWriteAndRead(t *testing.T) {
-//	tb := nb(2, t)
-//	tb.write('1')
-//	tb.read('1')
-//	tb.write('2')
-//	tb.read('2')
-//}
-//
+func TestAlternateWriteAndRead(t *testing.T) {
+	tb := nb(2, t)
+	tb.write('1')
+	tb.read('1')
+	tb.write('2')
+	tb.read('2')
+}
+
 //func TestReadOldestItem(t *testing.T) {
 //	tb := nb(3, t)
 //	tb.write('1')
