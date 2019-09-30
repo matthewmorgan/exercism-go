@@ -155,15 +155,15 @@ func TestOverwriteFull(t *testing.T) {
 	tb.readFail()
 }
 
-//func TestOverwriteNonFull(t *testing.T) {
-//	tb := nb(2, t)
-//	tb.write('1')
-//	tb.overwrite('2')
-//	tb.read('1')
-//	tb.read('2')
-//	tb.readFail()
-//}
-//
+func TestOverwriteNonFull(t *testing.T) {
+	tb := nb(2, t)
+	tb.write('1')
+	tb.overwrite('2')
+	tb.read('1')
+	tb.read('2')
+	tb.readFail()
+}
+
 //func TestAlternateReadAndOverwrite(t *testing.T) {
 //	tb := nb(5, t)
 //	tb.write('1')

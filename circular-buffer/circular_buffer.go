@@ -30,6 +30,10 @@ func (b *Buffer) WriteByte(c byte) error {
 }
 
 func (b *Buffer) Overwrite(c byte) {
+	if len(b.slots) < b.maxSize {
+		b.WriteByte(c)
+		return
+	}
 	b.slots = append(b.slots[1:], c)
 }
 
