@@ -22,6 +22,7 @@ func (b *Buffer) ReadByte() (byte, error) {
 }
 
 func (b *Buffer) WriteByte(c byte) error {
+	b.slots = append(b.slots, c)
 	return nil
 }
 
