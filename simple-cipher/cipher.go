@@ -23,6 +23,20 @@ type Vigenere struct {
 var INVALID_SHIFT_ARGS = []int{-27, -26, 0, 26, 27}
 var re = regexp.MustCompile(`(?m)[a-z]+`)
 
+func doShift(letter byte, offset byte) byte{
+	var shiftedLetter = letter + offset
+	if shiftedLetter > 122 {
+		shiftedLetter -= 26
+	} else if shiftedLetter < 97 {
+		shiftedLetter +=26
+	}
+	return shiftedLetter
+}
+
+func clean(plain string) string{
+	lower := strings.ToLower(plain)
+	return strings.Join(re.FindAllString(lower, -1), "")
+}
 
 func NewCaesar() Caesar {
 	var caesar Caesar
@@ -66,24 +80,11 @@ func NewVigenere(key string) *Vigenere {
 }
 
 func (v Vigenere) Encode(plain string) string {
-	var cleaned = clean(plain)
-	var length = len(cleaned)
-	var result = make([]byte, length)
-	for idx, letter := range []byte(cleaned) {
-		result[idx] = xcode(letter, byte(v.shiftByIndex[v.currentIndex]))
-		v.incrementIndex()
-	}
-	return string(result)
+	return v.xCode(clean(plain), 1)
 }
 
 func (v Vigenere) Decode(encoded string) string {
-	var length = len(encoded)
-	var result = make([]byte, length)
-	for idx, letter := range []byte(encoded) {
-		result[idx] = xcode(letter, -byte(v.shiftByIndex[v.currentIndex]))
-		v.incrementIndex()
-	}
-	return string(result)
+	return v.xCode(encoded, -1)
 }
 
 func (v *Vigenere) incrementIndex() {
@@ -94,38 +95,29 @@ func (v *Vigenere) incrementIndex() {
 	}
 }
 
-func (c Caesar) Encode(plain string) string{
-	var cleaned = clean(plain)
-	var length = len(cleaned)
+func (v *Vigenere) xCode(input string, sign int) string {
+	var length = len(input)
 	var result = make([]byte, length)
-	for idx, letter := range []byte(cleaned) {
-		result[idx] = xcode(letter, c.offset)
+	for idx, letter := range []byte(input) {
+		result[idx] = doShift(letter, byte(sign * v.shiftByIndex[v.currentIndex]))
+		v.incrementIndex()
 	}
 	return string(result)
+}
+
+func (c Caesar) Encode(plain string) string{
+	return xCode(clean(plain), c.offset)
 }
 
 func (c Caesar) Decode(encoded string) string{
-	var length = len(encoded)
+	return xCode(encoded, -c.offset)
+}
+
+func xCode(input string, offset byte) string {
+	var length = len(input)
 	var result = make([]byte, length)
-	for idx, letter := range []byte(encoded) {
-		result[idx] = xcode(letter, -c.offset)
+	for idx, letter := range []byte(input) {
+		result[idx] = doShift(letter, offset)
 	}
 	return string(result)
 }
-
-func xcode(letter byte, offset byte) byte{
-	var shiftedLetter = letter + offset
-	if shiftedLetter > 122 {
-		shiftedLetter -= 26
-	} else if shiftedLetter < 97 {
-		shiftedLetter +=26
-	}
-	return shiftedLetter
-}
-
-// Clean and normalize input text to lc alpha only
-func clean(plain string) string{
-	lower := strings.ToLower(plain)
-	return strings.Join(re.FindAllString(lower, -1), "")
-}
-
