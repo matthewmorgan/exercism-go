@@ -31,5 +31,5 @@ func (b *Buffer) Overwrite(c byte) {
 }
 
 func (b *Buffer) Reset() {
-
+	b.slots = []byte{}
 }
