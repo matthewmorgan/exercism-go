@@ -64,19 +64,19 @@ func testCipher(name string, c Cipher, tests []cipherTest, t *testing.T) {
 	}
 }
 
-//var NSATests = []cipherTest{
-//	{"THE ENEMY IS NEAR", "qebbkbjvfpkbxo", "theenemyisnear"},
-//	{"SPIES SEND SECRET MESSAGES",
-//		"pmfbppbkapbzobqjbppxdbp",
-//		"spiessendsecretmessages"},
-//	{"THOMAS JEFFERSON DESIGNED A SUBSTITUTION CIPHER",
-//		"qeljxpgbccboplkabpfdkbaxprypqfqrqflkzfmebo",
-//		"thomasjeffersondesignedasubstitutioncipher"},
-//	{"the quick brown fox jumps over the lazy dog",
-//		"qebnrfzhyoltkclugrjmplsboqebixwvald",
-//		"thequickbrownfoxjumpsoverthelazydog"},
-//}
-//
+var NSATests = []cipherTest{
+	{"THE ENEMY IS NEAR", "qebbkbjvfpkbxo", "theenemyisnear"},
+	{"SPIES SEND SECRET MESSAGES",
+		"pmfbppbkapbzobqjbppxdbp",
+		"spiessendsecretmessages"},
+	{"THOMAS JEFFERSON DESIGNED A SUBSTITUTION CIPHER",
+		"qeljxpgbccboplkabpfdkbaxprypqfqrqflkzfmebo",
+		"thomasjeffersondesignedasubstitutioncipher"},
+	{"the quick brown fox jumps over the lazy dog",
+		"qebnrfzhyoltkclugrjmplsboqebixwvald",
+		"thequickbrownfoxjumpsoverthelazydog"},
+}
+
 //func TestShift(t *testing.T) {
 //	// test shift(3) against Caesar cases.
 //	c := NewShift(3)
@@ -100,7 +100,7 @@ func testCipher(name string, c Cipher, tests []cipherTest, t *testing.T) {
 //		}
 //	}
 //}
-//
+
 //var vtests = []struct {
 //	key   string
 //	tests []cipherTest
