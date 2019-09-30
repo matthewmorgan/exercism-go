@@ -145,16 +145,16 @@ func TestWriteFullBuffer(t *testing.T) {
 	tb.writeFail('A')
 }
 
-//func TestOverwriteFull(t *testing.T) {
-//	tb := nb(2, t)
-//	tb.write('1')
-//	tb.write('2')
-//	tb.overwrite('A')
-//	tb.read('2')
-//	tb.read('A')
-//	tb.readFail()
-//}
-//
+func TestOverwriteFull(t *testing.T) {
+	tb := nb(2, t)
+	tb.write('1')
+	tb.write('2')
+	tb.overwrite('A')
+	tb.read('2')
+	tb.read('A')
+	tb.readFail()
+}
+
 //func TestOverwriteNonFull(t *testing.T) {
 //	tb := nb(2, t)
 //	tb.write('1')

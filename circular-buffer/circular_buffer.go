@@ -30,7 +30,7 @@ func (b *Buffer) WriteByte(c byte) error {
 }
 
 func (b *Buffer) Overwrite(c byte) {
-
+	b.slots = append(b.slots[1:], c)
 }
 
 func (b *Buffer) Reset() {
