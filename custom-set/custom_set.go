@@ -56,7 +56,7 @@ func Disjoint(s1 Set, s2 Set) bool {
 	if s1.IsEmpty()|| s2.IsEmpty() {
 		return true
 	}
-	return len(Intersection(s1, s2)) == 0
+	return Intersection(s1, s2).IsEmpty()
 }
 
 func Equal(s1 Set, s2 Set) bool {
