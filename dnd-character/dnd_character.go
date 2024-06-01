@@ -1,6 +1,7 @@
 package dndcharacter
 
 import (
+	"math"
 	"math/rand"
 	"sort"
 	"time"
@@ -17,8 +18,9 @@ type Character struct {
 }
 
 // Modifier calculates the ability modifier for a given ability score
+// Subtract 10 from the constituition score, divide by two, and round down.
 func Modifier(score int) int {
-	panic("Please implement the Modifier() function")
+	return int(math.Floor(float64(score-10) / 2))
 }
 
 // Ability uses randomness to generate the score for an ability
@@ -41,5 +43,14 @@ func Ability() int {
 
 // GenerateCharacter creates a new Character with random scores for abilities
 func GenerateCharacter() Character {
-	panic("Please implement the GenerateCharacter() function")
+	constitution := Ability()
+	return Character{
+		Strength:     Ability(),
+		Dexterity:    Ability(),
+		Constitution: constitution,
+		Intelligence: Ability(),
+		Wisdom:       Ability(),
+		Charisma:     Ability(),
+		Hitpoints:    10 + Modifier(constitution),
+	}
 }
