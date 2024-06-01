@@ -2,6 +2,7 @@ package dndcharacter
 
 import (
 	"math/rand"
+	"sort"
 	"time"
 )
 
@@ -21,10 +22,21 @@ func Modifier(score int) int {
 }
 
 // Ability uses randomness to generate the score for an ability
+// We roll three six-sided dice and sum the top three results
 func Ability() int {
 	rand.Seed(time.Now().UnixNano())
-	randomInt := 3 + rand.Intn(6) + rand.Intn(6) + rand.Intn(6)
-	return randomInt
+	randomInts := []int{}
+	for i := 0; i < 4; i++ {
+		randomInts = append(randomInts, rand.Intn(6)+1)
+	}
+	sort.Ints(randomInts)
+	randomInts = randomInts[1:]
+	ability := 0
+	for _, i := range randomInts {
+		ability += i
+	}
+
+	return ability
 }
 
 // GenerateCharacter creates a new Character with random scores for abilities
